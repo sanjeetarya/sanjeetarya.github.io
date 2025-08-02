@@ -1,48 +1,758 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Your Name - Personal Portfolio</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanjeet Arya - Data Scientist & AI Engineer</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
-        h1 { color: #333; }
-        .section { margin: 30px 0; }
-        .contact { background: #f4f4f4; padding: 15px; border-radius: 5px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #e2e8f0;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(15, 23, 42, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="%233b82f6" stop-opacity="0.1"/><stop offset="100%" stop-color="%233b82f6" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23a)"/><circle cx="800" cy="400" r="150" fill="url(%23a)"/><circle cx="400" cy="800" r="120" fill="url(%23a)"/></svg>') no-repeat center;
+            background-size: cover;
+            opacity: 0.3;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            color: #60a5fa;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #60a5fa;
+            border: 2px solid #3b82f6;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #60a5fa;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.2);
+        }
+
+        .skill-category h3 {
+            color: #60a5fa;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: rgba(59, 130, 246, 0.2);
+            color: #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-title {
+            color: #60a5fa;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: #cbd5e1;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            color: #60a5fa;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 23, 42, 0.8);
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Your Name</h1>
-    <p>Welcome to my professional portfolio</p>
-    
-    <div class="section">
-        <h2>About Me</h2>
-        <p>Brief description of your background and expertise</p>
-    </div>
-    
-    <div class="section">
-        <h2>Work Experience</h2>
-        <h3>Current Position</h3>
-        <p>Company Name | Year - Present</p>
-        <ul>
-            <li>Key responsibility or achievement</li>
-            <li>Another important accomplishment</li>
-        </ul>
-    </div>
-    
-    <div class="section">
-        <h2>Skills</h2>
-        <ul>
-            <li>Skill 1</li>
-            <li>Skill 2</li>
-            <li>Skill 3</li>
-        </ul>
-    </div>
-    
-    <div class="contact">
-        <h2>Contact</h2>
-        <p>Email: your.email@example.com</p>
-        <p>LinkedIn: your-linkedin-profile</p>
-    </div>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <div class="logo">Sanjeet Arya</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Sanjeet Arya</h1>
+                <div class="subtitle">Data Scientist & AI Engineer</div>
+                <p class="description">
+                    Passionate about transforming data into actionable insights through cutting-edge AI and machine learning. 
+                    Currently crafting innovative solutions at Sigmoid, with expertise in GenAI, MLOps, and scalable data systems.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="fade-in">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm a Data Scientist at Sigmoid with a strong background in Aerospace Engineering from IIT Kanpur. My journey in tech has been driven by a passion for solving complex problems through innovative AI solutions.</p>
+                    
+                    <p>At Sigmoid, I've led groundbreaking projects including a GenAI-powered recommendation engine that reduced product selection time by 99%, and developed cutting-edge RAG testing frameworks that streamlined ML model evaluation.</p>
+                    
+                    <p>My expertise spans across machine learning, deep learning, NLP, and cloud technologies, with a special focus on building scalable, production-ready AI systems that drive real business value.</p>
+                </div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">20K+</div>
+                        <div class="stat-label">SKUs Managed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99%</div>
+                        <div class="stat-label">Time Reduction</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">96%</div>
+                        <div class="stat-label">ML Accuracy</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">$1.3M</div>
+                        <div class="stat-label">Project Value</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="fade-in">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Machine Learning & AI</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Deep Learning</span>
+                        <span class="skill-tag">NLP</span>
+                        <span class="skill-tag">Computer Vision</span>
+                        <span class="skill-tag">Time Series</span>
+                        <span class="skill-tag">GenAI</span>
+                        <span class="skill-tag">LangChain</span>
+                        <span class="skill-tag">RAG</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Programming & Frameworks</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">Scikit-Learn</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Data & Visualization</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">NumPy</span>
+                        <span class="skill-tag">Power BI</span>
+                        <span class="skill-tag">Tableau</span>
+                        <span class="skill-tag">Matplotlib</span>
+                        <span class="skill-tag">Plotly</span>
+                        <span class="skill-tag">Streamlit</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Cloud & Infrastructure</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Azure</span>
+                        <span class="skill-tag">Databricks</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">APIs</span>
+                        <span class="skill-tag">Neo4j</span>
+                        <span class="skill-tag">FAISS</span>
+                        <span class="skill-tag">Cassandra</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="fade-in">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">GenAI Product Recommendation Engine</h3>
+                        <p class="project-description">
+                            Led development of an AI-powered recommendation engine that matched customer needs with 20,000+ SKUs, 
+                            reducing product selection time from 10 days to 5 minutes. Secured 1st place and $1.3M project value.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">LangChain</span>
+                            <span class="tech-tag">Azure AI Search</span>
+                            <span class="tech-tag">Vector DB</span>
+                            <span class="tech-tag">Neo4j</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">RAG Testing Framework</h3>
+                        <p class="project-description">
+                            Developed a cutting-edge LLM testing framework to evaluate custom RAG pipelines using GPT, LLama, and Mistral models, 
+                            reducing iteration time by 30% with interactive Streamlit UI.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">RAG</span>
+                            <span class="tech-tag">GPT</span>
+                            <span class="tech-tag">Streamlit</span>
+                            <span class="tech-tag">Benchmarking</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">Human Activity Recognition System</h3>
+                        <p class="project-description">
+                            Delivered an end-to-end HAR solution for Fortune 500 client using sensor data from digital watches, 
+                            achieving 95% accuracy with custom hybrid model combining DNN, LSTM, and CNN.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Deep Learning</span>
+                            <span class="tech-tag">LSTM</span>
+                            <span class="tech-tag">CNN</span>
+                            <span class="tech-tag">Signal Processing</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">Complaint Classification Solution</h3>
+                        <p class="project-description">
+                            Architected an ML-based solution to classify customer requests with 96% accuracy using Sentence Transformers 
+                            and advanced NLP techniques, ensuring PII protection and scalability on Databricks.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">NLP</span>
+                            <span class="tech-tag">BERT</span>
+                            <span class="tech-tag">Databricks</span>
+                            <span class="tech-tag">Privacy</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">Time Series Forecasting Suite</h3>
+                        <p class="project-description">
+                            Applied advanced forecasting techniques for energy demand and airline passenger prediction using 
+                            state-of-the-art models like Temporal Fusion Transformers, N-BEATS, and TCN.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Time Series</span>
+                            <span class="tech-tag">PyTorch</span>
+                            <span class="tech-tag">Optuna</span>
+                            <span class="tech-tag">Forecasting</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">Influencer Analytics Tool</h3>
+                        <p class="project-description">
+                            Built comprehensive influencer analysis tool scraping Instagram, Twitter, and YouTube data with 
+                            40% performance optimization through multithreading, delivering actionable marketing insights.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Web Scraping</span>
+                            <span class="tech-tag">APIs</span>
+                            <span class="tech-tag">Sentiment Analysis</span>
+                            <span class="tech-tag">Data Viz</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="fade-in">
+        <div class="container">
+            <h2 class="section-title">Let's Connect</h2>
+            <div class="contact-content">
+                <p>I'm always open to discussing new opportunities, innovative projects, or just having a chat about the latest in AI and machine learning.</p>
+                <div class="contact-info">
+                    <a href="mailto:aryasanjeet2000@gmail.com" class="contact-item">
+                        <span>📧</span>
+                        <span>aryasanjeet2000@gmail.com</span>
+                    </a>
+                    <a href="tel:+916377565177" class="contact-item">
+                        <span>📱</span>
+                        <span>+91 6377565177</span>
+                    </a>
+                    <a href="#" class="contact-item">
+                        <span>💼</span>
+                        <span>LinkedIn Profile</span>
+                    </a>
+                    <a href="#" class="contact-item">
+                        <span>🐙</span>
+                        <span>GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Sanjeet Arya. Crafted with passion for innovation.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add some interactive hover effects
+        document.querySelectorAll('.project-card, .skill-category').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Dynamic typing effect for subtitle (optional enhancement)
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize typing effect after page load
+        window.addEventListener('load', () => {
+            const subtitle = document.querySelector('.hero .subtitle');
+            typeWriter(subtitle, 'Data Scientist & AI Engineer', 80);
+        });
+    </script>
 </body>
 </html>
